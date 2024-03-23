@@ -8,7 +8,7 @@ import os
 class PacketTunnelProvider: NEPacketTunnelProvider {
 
     private lazy var adapter: WireGuardAdapter = {
-        return WireGuardAdapter(with: self) { logLevel, message in
+        return WireGuardAdapter(with: self, backend: WireGuardBackendGo()) { logLevel, message in
             wg_log(logLevel.osLogLevel, message: message)
         }
     }()
@@ -103,6 +103,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         } else {
             completionHandler(nil)
         }
+    }
+}
+
+extension PacketTunnelProvider: WireGuardAdapterDelegate {
+    public func adapterShouldReassert(_ adapter: WireGuardAdapter, reasserting: Bool) {
+        self.reasserting = reasserting
+    }
+
+    public func adapterShouldSetNetworkSettings(_ adapter: WireGuardAdapter, settings: Any?, completionHandler: ((Error?) -> Void)?) {
+        guard let settings = settings as? NEPacketTunnelNetworkSettings else {
+            return
+        }
+        setTunnelNetworkSettings(settings, completionHandler: completionHandler)
     }
 }
 
