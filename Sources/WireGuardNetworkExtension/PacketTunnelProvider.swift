@@ -111,10 +111,7 @@ extension PacketTunnelProvider: WireGuardAdapterDelegate {
         self.reasserting = reasserting
     }
 
-    public func adapterShouldSetNetworkSettings(_ adapter: WireGuardAdapter, settings: Any?, completionHandler: ((Error?) -> Void)?) {
-        guard let settings = settings as? NEPacketTunnelNetworkSettings else {
-            return
-        }
+    public func adapterShouldSetNetworkSettings(_ adapter: WireGuardAdapter, settings: NEPacketTunnelNetworkSettings, completionHandler: (((any Error)?) -> Void)?) {
         setTunnelNetworkSettings(settings, completionHandler: completionHandler)
     }
 }
