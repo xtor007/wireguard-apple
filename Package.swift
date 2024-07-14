@@ -20,7 +20,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/passepartoutvpn/wg-go-apple", from: "0.0.20240326")
+        .package(url: "https://github.com/passepartoutvpn/wg-go-apple", from: "0.0.20240714")
     ],
     targets: [
         .target(
